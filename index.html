@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Standards Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .standard-item {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .standard-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .good {
+            border-left-color: #28a745;
+        }
+
+        .bad {
+            border-left-color: #dc3545;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .badge-good {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-bad {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 10px;
+            background: #f8f9fa;
+            margin: 8px 0;
+            border-radius: 5px;
+            position: relative;
+            padding-left: 35px;
+        }
+
+        .checklist li:before {
+            content: '✓';
+            position: absolute;
+            left: 10px;
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Coding Standards Guide</h1>
+            <p class="subtitle">Best practices for clean, maintainable code</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" onclick="showSection('naming')">Naming Conventions</button>
+            <button class="nav-btn" onclick="showSection('formatting')">Code Formatting</button>
+            <button class="nav-btn" onclick="showSection('structure')">Code Structure</button>
+            <button class="nav-btn" onclick="showSection('documentation')">Documentation</button>
+            <button class="nav-btn" onclick="showSection('security')">Security</button>
+            <button class="nav-btn" onclick="showSection('testing')">Testing</button>
+        </nav>
+
+        <div class="content">
+            <div id="naming" class="section active">
+                <h2>Naming Conventions</h2>
+                
+                <div class="standard-item">
+                    <h3>Variables & Functions</h3>
+                    <p><strong>Use descriptive, meaningful names</strong> that clearly indicate purpose.</p>
+                    
+                    <div class="code-example">
+<span class="badge-bad">✗ Bad</span>
+const d = new Date();
+const x = users.filter(u => u.a);
+
+<span class="badge-good">✓ Good</span>
+const currentDate = new Date();
+const activeUsers = users.filter(user => user.isActive);
+                    </div>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Naming Style Guidelines</h3>
+                    <ul>
+                        <li><strong>camelCase</strong> - Variables, functions: <code>getUserData()</code>, <code>isActive</code></li>
+                        <li><strong>PascalCase</strong> - Classes, components: <code>UserProfile</code>, <code>DataService</code></li>
+                        <li><strong>UPPER_SNAKE_CASE</strong> - Constants: <code>MAX_RETRY_COUNT</code>, <code>API_BASE_URL</code></li>
+                        <li><strong>kebab-case</strong> - File names: <code>user-profile.js</code>, <code>api-client.ts</code></li>
+                    </ul>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Boolean Naming</h3>
+                    <p>Prefix boolean variables with <code>is</code>, <code>has</code>, <code>can</code>, or <code>should</code>.</p>
+                    <div class="code-example">
+const isAuthenticated = true;
+const hasPermission = checkPermissions(user);
+const canEdit = user.role === 'admin';
+const shouldRender = isVisible && hasData;
+                    </div>
+                </div>
+            </div>
+
+            <div id="formatting" class="section">
+                <h2>Code Formatting</h2>
+
+                <div class="standard-item">
+                    <h3>Indentation & Spacing</h3>
+                    <ul>
+                        <li>Use <strong>2 or 4 spaces</strong> for indentation (be consistent)</li>
+                        <li>Maximum line length: <strong>80-120 characters</strong></li>
+                        <li>Add blank lines between logical blocks</li>
+                        <li>One statement per line</li>
+                    </ul>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Brackets & Braces</h3>
+                    <div class="code-example">
+<span class="badge-good">✓ Good - K&R Style</span>
+if (condition) {
+  doSomething();
+} else {
+  doSomethingElse();
+}
+
+function calculateTotal(items) {
+  return items.reduce((sum, item) => sum + item.price, 0);
+}
+                    </div>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Imports & Dependencies</h3>
+                    <p>Group and order imports logically:</p>
+                    <div class="code-example">
+// 1. Standard library imports
+import { useState, useEffect } from 'react';
+
+// 2. Third-party imports
+import axios from 'axios';
+import _ from 'lodash';
+
+// 3. Internal/local imports
+import { UserService } from './services';
+import { formatDate } from './utils';
+                    </div>
+                </div>
+            </div>
+
+            <div id="structure" class="section">
+                <h2>Code Structure</h2>
+
+                <div class="standard-item">
+                    <h3>Function Length</h3>
+                    <ul>
+                        <li>Keep functions <strong>small and focused</strong> (ideally under 50 lines)</li>
+                        <li>Each function should do <strong>one thing well</strong></li>
+                        <li>Extract complex logic into separate functions</li>
+                    </ul>
+                </div>
+
+                <div class="standard-item">
+                    <h3>DRY Principle (Don't Repeat Yourself)</h3>
+                    <div class="code-example">
+<span class="badge-bad">✗ Bad - Repetition</span>
+function calculateTaxForUS(amount) {
+  return amount * 0.07;
+}
+function calculateTaxForCA(amount) {
+  return amount * 0.05;
+}
+
+<span class="badge-good">✓ Good - Reusable</span>
+function calculateTax(amount, taxRate) {
+  return amount * taxRate;
+}
+
+const TAX_RATES = {
+  US: 0.07,
+  CA: 0.05
+};
+                    </div>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Early Returns</h3>
+                    <p>Reduce nesting with guard clauses and early returns.</p>
+                    <div class="code-example">
+<span class="badge-good">✓ Good</span>
+function processUser(user) {
+  if (!user) return null;
+  if (!user.isActive) return null;
+  if (!user.hasPermission) return null;
+  
+  return performProcessing(user);
+}
+                    </div>
+                </div>
+            </div>
+
+            <div id="documentation" class="section">
+                <h2>Documentation Standards</h2>
+
+                <div class="standard-item">
+                    <h3>Code Comments</h3>
+                    <ul>
+                        <li><strong>Explain WHY, not WHAT</strong> - Code should be self-explanatory</li>
+                        <li>Document complex algorithms or business logic</li>
+                        <li>Add TODOs with assigned developer and date</li>
+                        <li>Remove commented-out code before committing</li>
+                    </ul>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Function Documentation</h3>
+                    <div class="code-example">
+/**
+ * Calculates the total price including tax and discount
+ * 
+ * @param {number} basePrice - The original price before modifications
+ * @param {number} taxRate - Tax rate as decimal (e.g., 0.08 for 8%)
+ * @param {number} discountPercent - Discount as percentage (0-100)
+ * @returns {number} Final price after tax and discount
+ * @throws {Error} If basePrice is negative
+ */
+function calculateFinalPrice(basePrice, taxRate, discountPercent) {
+  if (basePrice < 0) {
+    throw new Error('Price cannot be negative');
+  }
+  
+  const discountAmount = basePrice * (discountPercent / 100);
+  const priceAfterDiscount = basePrice - discountAmount;
+  return priceAfterDiscount * (1 + taxRate);
+}
+                    </div>
+                </div>
+
+                <div class="standard-item">
+                    <h3>README Requirements</h3>
+                    <ul class="checklist">
+                        <li>Project description and purpose</li>
+                        <li>Installation instructions</li>
+                        <li>Usage examples</li>
+                        <li>Configuration options</li>
+                        <li>Contributing guidelines</li>
+                        <li>License information</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="security" class="section">
+                <h2>Security Best Practices</h2>
+
+                <div class="standard-item">
+                    <h3>Input Validation</h3>
+                    <ul>
+                        <li><strong>Never trust user input</strong> - Always validate and sanitize</li>
+                        <li>Use parameterized queries to prevent SQL injection</li>
+                        <li>Validate data types, ranges, and formats</li>
+                        <li>Escape output to prevent XSS attacks</li>
+                    </ul>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Secrets Management</h3>
+                    <div class="code-example">
+<span class="badge-bad">✗ Bad - Hardcoded secrets</span>
+const API_KEY = 'sk-1234567890abcdef';
+const password = 'myPassword123';
+
+<span class="badge-good">✓ Good - Environment variables</span>
+const API_KEY = process.env.API_KEY;
+const password = process.env.DB_PASSWORD;
+                    </div>
+                    <p><strong>Never commit:</strong> API keys, passwords, tokens, certificates</p>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Authentication & Authorization</h3>
+                    <ul>
+                        <li>Use secure password hashing (bcrypt, Argon2)</li>
+                        <li>Implement proper session management</li>
+                        <li>Use HTTPS for all communications</li>
+                        <li>Apply principle of least privilege</li>
+                        <li>Implement rate limiting</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="testing" class="section">
+                <h2>Testing Standards</h2>
+
+                <div class="standard-item">
+                    <h3>Test Coverage Requirements</h3>
+                    <ul>
+                        <li>Minimum <strong>80% code coverage</strong> for critical paths</li>
+                        <li>All public APIs must have tests</li>
+                        <li>Test edge cases and error conditions</li>
+                        <li>Run tests before every commit</li>
+                    </ul>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Test Structure (AAA Pattern)</h3>
+                    <div class="code-example">
+test('should calculate discount correctly', () => {
+  // Arrange
+  const originalPrice = 100;
+  const discountPercent = 20;
+  
+  // Act
+  const result = calculateDiscount(originalPrice, discountPercent);
+  
+  // Assert
+  expect(result).toBe(80);
+});
+                    </div>
+                </div>
+
+                <div class="standard-item">
+                    <h3>Testing Best Practices</h3>
+                    <ul>
+                        <li><strong>Unit Tests:</strong> Test individual functions in isolation</li>
+                        <li><strong>Integration Tests:</strong> Test component interactions</li>
+                        <li><strong>E2E Tests:</strong> Test complete user workflows</li>
+                        <li>Keep tests fast and independent</li>
+                        <li>Use descriptive test names that explain the scenario</li>
+                        <li>Mock external dependencies</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active state from all buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active state to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
